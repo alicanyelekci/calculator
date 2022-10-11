@@ -7,7 +7,6 @@ const currentDisplay = document.getElementById("current-display");
 const upperDisplay = document.getElementById("upper-display");
 
 let displayedNumber = currentDisplay.innerText;
-let upperNumber = upperDisplay.innerText;
 let firstNumber = "";
 let secondNumber = "";
 let operator = "";
@@ -18,7 +17,9 @@ btnEquals.addEventListener("click", () => {
     secondNumber = displayedNumber,
     operate(firstNumber, secondNumber, operator),
     operator = "",
-    updateUpperDisplay(operator)
+    updateUpperDisplay(operator),
+    displayedNumber = "",
+    updateDisplay(displayedNumber)
 });
 
 btnClear.addEventListener("click", () => {
@@ -26,13 +27,17 @@ btnClear.addEventListener("click", () => {
     secondNumber = "",
     operator = "",
     displayedNumber = "",
-    upperNumber = "",
+    upperDisplay.innerText = "",
     updateDisplay(displayedNumber)
 });
 
 btnOperator.forEach(button => {
     button.addEventListener("click", () => {
-        if(operator === "") getFirstNumber();
+        if(operator !== "") btnEquals.click();
+        if(displayedNumber == ".") return;
+        getFirstNumber();
+        if(firstNumber == "") return;
+        displayedNumber = firstNumber;
         operator = button.innerText;
         updateUpperDisplay(operator);
         clearDisplay();
@@ -48,11 +53,16 @@ function updateUpperDisplay(operator) {
 }
 
 function getFirstNumber() {
-    firstNumber = displayedNumber;
+    if(displayedNumber == "") {
+        firstNumber = upperDisplay.innerText; 
+    }
+    else {
+        firstNumber = displayedNumber;
+    }
 };
 
 function appendNumber(number) {
-    console.log(displayedNumber);
+    if(displayedNumber.length > 15) return;
     if(displayedNumber.indexOf(".") > -1 && number == ".") {
         return;
     }
@@ -96,7 +106,7 @@ function operate(num1, num2, operator) {
         displayedNumber = num1 /num2;
     }
 
-    displayedNumber = parseFloat(displayedNumber);
+    displayedNumber = parseFloat(displayedNumber).toFixed(1);
     firstNumber = displayedNumber;
     updateDisplay(displayedNumber);
 };
