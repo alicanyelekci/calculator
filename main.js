@@ -10,46 +10,67 @@ let displayedNumber = currentDisplay.innerText;
 let firstNumber = "";
 let secondNumber = "";
 let operator = "";
+updateDisplay("0");
 
+window.addEventListener('keydown', keyboardInput);
 btnDelete.addEventListener("click", () => deleteNumber());
-
-btnEquals.addEventListener("click", () => {
-    secondNumber = displayedNumber,
-    operate(firstNumber, secondNumber, operator),
-    operator = "",
-    updateUpperDisplay(operator),
-    displayedNumber = "",
-    updateDisplay(displayedNumber)
-});
-
-btnClear.addEventListener("click", () => {
-    firstNumber = "",
-    secondNumber = "",
-    operator = "",
-    displayedNumber = "",
-    upperDisplay.innerText = "",
-    updateDisplay(displayedNumber)
-});
-
-btnOperator.forEach(button => {
-    button.addEventListener("click", () => {
-        if(operator !== "") btnEquals.click();
-        if(displayedNumber == ".") return;
-        getFirstNumber();
-        if(firstNumber == "") return;
-        displayedNumber = firstNumber;
-        operator = button.innerText;
-        updateUpperDisplay(operator);
-        clearDisplay();
-    });
-});
+btnEquals.addEventListener("click", () => evaluate());
+btnClear.addEventListener("click", () => clear());
 
 btnNumber.forEach(button => {
     button.addEventListener("click", () => appendNumber(button.innerText));
 });
 
-function updateUpperDisplay(operator) {
-    upperDisplay.innerText = `${displayedNumber} ${operator}`;
+btnOperator.forEach(button => {
+    button.addEventListener("click", () => operation(button.innerText));
+});
+
+
+function evaluate() {
+    if(displayedNumber === "") {
+        operator = "";
+        updateUpperDisplay(operator, firstNumber);
+        return;
+    }
+    secondNumber = displayedNumber;
+    operate(firstNumber, secondNumber, operator);
+    operator = "";
+    updateUpperDisplay(operator);
+    displayedNumber = "";
+    updateDisplay(displayedNumber);
+}
+
+function clear() {
+    firstNumber = "";
+    secondNumber = "";
+    operator = "";
+    displayedNumber = "";
+    upperDisplay.innerText = "";
+    updateDisplay("0");
+}
+
+function operation(button) {
+    if(operator !== "") evaluate();
+    if(displayedNumber == ".") return;
+    getFirstNumber();
+    if(firstNumber == "") return;
+    displayedNumber = firstNumber;
+    operator = button;//button.innerText;
+    updateUpperDisplay(operator);
+    clearDisplay();
+}
+
+function keyboardInput(e) {
+    if (e.key >= 0 && e.key <= 9) appendNumber(e.key);
+    if (e.key === '.') appendNumber(e.key);
+    if (e.key === '=' || e.key === 'Enter') evaluate();
+    if (e.key === 'Backspace') deleteNumber();
+    if (e.key === 'c' || e.key === 'C') clear();
+    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') operation(e.key);
+};
+
+function updateUpperDisplay(operator, number = displayedNumber) {
+    upperDisplay.innerText = `${number} ${operator}`;
 }
 
 function getFirstNumber() {
@@ -77,6 +98,7 @@ function deleteNumber() {
     number.pop();
     displayedNumber = number.join("");
     updateDisplay(displayedNumber);
+    if (displayedNumber.length === 0) updateDisplay("0");
 }
 
 function clearDisplay() {
