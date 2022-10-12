@@ -1,0 +1,66 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.calculator {
+    font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 5px solid darkgray;
+    padding: 25px;
+}
+
+.display {
+    display: flexbox;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 3px darkgray solid;
+}
+
+#upper-display, #current-display {
+    width: 300px;
+    height: 30px;
+    padding: 3px;
+    text-align: end;
+    font-size: 28px;
+    color: rgb(100, 100, 100);
+}
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    width: 325px;
+    height: 375px;
+}
+
+.upper-buttons {
+    display: grid;
+    grid-column: 1 / 5;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+}
+
+.footer {
+    text-align: center;    
+}
+
+button {
+    border-radius: 500px;
+    border: 0px;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    background-color: darkgray;
+}
