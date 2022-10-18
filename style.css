@@ -2,8 +2,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: 50px;
     align-items: center;
+    height: 100vh;
 }
 .calculator {
     font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
